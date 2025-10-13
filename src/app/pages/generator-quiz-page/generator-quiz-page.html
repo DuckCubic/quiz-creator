@@ -1,0 +1,94 @@
+<div class="w-full h-screen flex items-center justify-center" style="background-color: #ffffff;">
+  <main
+    class="relative z-10 w-[360px] h-[640px] flex flex-col p-6 space-y-4 rounded-[2.5rem] shadow-2xl overflow-hidden">
+    
+    <!-- Video dinámico -->
+    <video 
+      #videoPlayer
+      class="absolute inset-0 w-full h-full object-cover rounded-[2.5rem]" 
+      autoplay 
+      muted 
+      loop 
+      playsinline>
+      <source [src]="currentQuestion.videoUrl" type="video/mp4">
+    </video>
+
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <span class="text-6xl font-black text-gray-300/20 rotate-[-25deg]">PREVIEW</span>
+    </div>
+
+    <app-quiz-header
+      [currentQuestion]="currentQuestionIndex + 1"
+      [totalQuestions]="questions.length">
+    </app-quiz-header>
+
+    <app-circular-timer
+      [timeLimit]="currentQuestion.timeLimit"
+      (timeUp)="onTimeUp()">
+    </app-circular-timer>
+
+    <section class="relative z-10 flex-grow flex flex-col justify-center space-y-4">
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border-2 border-white/50">
+        <span
+          class="inline-block px-3 py-1 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-xs font-bold rounded-full mb-2">
+          Pregunta #{{ currentQuestion.id }}
+        </span>
+        <h2 class="text-xl font-extrabold text-gray-800 leading-tight">
+          {{ currentQuestion.questionText }}
+        </h2>
+      </div>
+
+      <div class="grid gap-2.5">
+        @for (option of options; track option.letter) {
+          <app-quiz-option 
+            [letter]="option.letter" 
+            [text]="option.text" 
+            [isSelected]="selectedOption === option.letter"
+            [isCorrect]="showingAnswer ? (option.letter === currentQuestion.correctAnswer ? true : (option.letter === selectedOption ? false : null)) : null"
+           >
+          </app-quiz-option>
+        }
+      </div>
+    </section>
+  </main>
+
+  <!-- Panel derecho -->
+  <aside
+    class="absolute right-0 top-0 h-full w-80 bg-gradient-to-b from-white/95 to-green-50/95 backdrop-blur-xl border-l border-green-200/50 shadow-2xl overflow-hidden z-20 flex flex-col">
+    <div class="p-6 flex-1 overflow-auto">
+      <div class="flex items-center gap-3 pb-4 border-b border-green-200 mb-4">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+          <i class="fas fa-list text-white text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Mis
+            Preguntas</h3>
+          <p class="text-xs text-gray-600">{{ questions.length }} preguntas agregadas</p>
+        </div>
+      </div>
+
+      <div id="questionsList" class="space-y-3">
+        @for (question of questions; track question.id) {
+          <div 
+            class="p-3 bg-white rounded-lg border-2 transition-all cursor-pointer"
+            [class.border-green-400]="currentQuestionIndex === $index"
+            [class.border-green-200]="currentQuestionIndex !== $index">
+            <p class="text-sm font-semibold text-gray-700">Pregunta #{{ question.id }}</p>
+            <p class="text-xs text-gray-500 truncate">{{ question.questionText }}</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="p-6 border-t border-green-200 bg-white/50">
+      <button
+        (click)="startQuiz()"
+        [disabled]="quizStarted"
+        class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white px-6 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+        <i class="fas fa-play text-xl"></i>
+        <span class="text-lg">{{ quizStarted ? 'Quiz en curso...' : 'Iniciar Quiz' }}</span>
+      </button>
+    </div>
+  </aside>
+</div>

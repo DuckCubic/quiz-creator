@@ -1,0 +1,30 @@
+<!-- circular-timer.component.html -->
+<div class="relative z-10 w-full flex items-center justify-center">
+  <div class="relative w-24 h-24">
+    <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+      <circle cx="48" cy="48" r="44" fill="none" stroke="#fed7aa" stroke-width="8" />
+      <circle 
+        cx="48" 
+        cy="48" 
+        r="44" 
+        fill="none" 
+        stroke="url(#gradient)" 
+        stroke-width="8" 
+        stroke-dasharray="276"
+        [attr.stroke-dashoffset]="strokeDashoffset" 
+        stroke-linecap="round"
+        class="transition-all duration-1000 ease-linear" />
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <span class="text-4xl font-black bg-gradient-to-br from-orange-600 to-pink-600 bg-clip-text text-transparent">
+        {{ timeRemaining }}
+      </span>
+    </div>
+  </div>
+</div>

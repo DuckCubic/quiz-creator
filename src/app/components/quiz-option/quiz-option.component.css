@@ -1,0 +1,18 @@
+:host {
+  display: contents;
+}
+
+button {
+  width: 100%; 
+}
+
+div {
+  position: relative;
+}
+.recording-mode aside {
+  display: none !important;
+}
+
+.recording-mode main {
+  margin: 0 auto;
+}

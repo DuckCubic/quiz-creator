@@ -1,0 +1,249 @@
+<div
+  class="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 via-pink-400 to-purple-500 overflow-hidden">
+
+  <!-- Fondo animado con círculos -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-20 w-72 h-72 bg-yellow-300/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-20 right-20 w-96 h-96 bg-pink-300/20 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 1s;"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-300/20 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 0.5s;"></div>
+  </div>
+
+  <!-- Panel izquierdo: Formulario -->
+  <aside
+    class="absolute left-0 top-0 h-full w-80 bg-gradient-to-b from-white/95 to-orange-50/95 backdrop-blur-xl border-r border-orange-200/50 shadow-2xl overflow-auto z-20">
+    <div class="p-6 space-y-5">
+      <!-- Header del panel -->
+      <div class="flex items-center gap-3 pb-4 border-b border-orange-200">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+          <i class="fas fa-plus text-white text-lg"></i>
+        </div>
+        <h3 class="text-xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">Nueva
+          Pregunta</h3>
+      </div>
+
+      <!-- Formulario -->
+      <div class="space-y-4">
+        <div>
+          <label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
+            <i class="fas fa-question-circle text-orange-500"></i>
+            Pregunta
+          </label>
+          <textarea rows="3" placeholder="¿Cuál es tu pregunta?"
+            class="w-full p-3 rounded-xl border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-4 focus:ring-orange-100 transition-all resize-none"></textarea>
+        </div>
+
+        <div class="space-y-3">
+          <label class="text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <i class="fas fa-list-ul text-orange-500"></i>
+            Opciones de Respuesta
+          </label>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span
+                class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-500 text-white font-bold rounded-lg text-sm shadow-md">A</span>
+              <input type="text" placeholder="Primera opción"
+                class="flex-1 p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 transition-all">
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-pink-400 to-pink-500 text-white font-bold rounded-lg text-sm shadow-md">B</span>
+              <input type="text" placeholder="Segunda opción"
+                class="flex-1 p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 transition-all">
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-purple-400 to-purple-500 text-white font-bold rounded-lg text-sm shadow-md">C</span>
+              <input type="text" placeholder="Tercera opción"
+                class="flex-1 p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 transition-all">
+            </div>
+            <div class="flex items-center gap-2">
+              <span
+                class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-yellow-400 to-yellow-500 text-white font-bold rounded-lg text-sm shadow-md">D</span>
+              <input type="text" placeholder="Cuarta opción"
+                class="flex-1 p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 transition-all">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
+            <i class="fas fa-film text-orange-500"></i>
+            Video de Fondo
+          </label>
+          <label
+            class="flex items-center justify-center gap-3 p-4 rounded-xl border-2 border-dashed border-orange-300 hover:border-orange-400 bg-orange-50/50 cursor-pointer transition-all group">
+            <i class="fas fa-cloud-upload-alt text-2xl text-orange-400 group-hover:text-orange-500"></i>
+            <span class="text-sm text-gray-600 group-hover:text-gray-800">Seleccionar video</span>
+            <input type="file" accept="video/*" class="hidden">
+          </label>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="flex-1">
+            <label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
+              <i class="fas fa-clock text-orange-500"></i>
+              Tiempo
+            </label>
+            <div class="flex items-center gap-2">
+              <input type="number" min="5" max="60" value="10"
+                class="w-20 p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 text-center font-semibold">
+              <span class="text-sm text-gray-600">segundos</span>
+            </div>
+          </div>
+          <div class="flex-1">
+            <label class="text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
+              <i class="fas fa-check-circle text-green-500"></i>
+              Correcta
+            </label>
+            <select
+              class="w-full p-2.5 rounded-lg border-2 border-orange-200 focus:border-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-100 font-semibold">
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          class="w-full bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2">
+          <i class="fas fa-save"></i>
+          Guardar Pregunta
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Vista previa central (móvil) -->
+  <main
+    class="relative z-10 w-[360px] h-[640px] flex flex-col p-6 space-y-4 rounded-[2.5rem] shadow-2xl overflow-hidden">
+    <!-- 🎥 Fondo de video -->
+    <video class="absolute inset-0 w-full h-full object-cover rounded-[2.5rem]" autoplay muted loop playsinline>
+      <source src="assets/videos/kic.mp4" type="video/mp4">
+    </video>
+
+    <!-- Marca de agua "PREVIEW" -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <span class="text-6xl font-black text-gray-300/20 rotate-[-25deg]">PREVIEW</span>
+    </div>
+
+    <header class="relative z-10 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <img src="https://i.pravatar.cc/102" class="w-12 h-12 rounded-full border-3 border-white shadow-lg" />
+          <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full"></div>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+            FrameQuiz</h1>
+          <p class="text-xs text-orange-600/80 font-medium">Cinema Fun</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="px-3 py-1 bg-white/90 rounded-full shadow-md">
+          <span class="text-xs font-bold text-orange-600">1/10</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Timer circular mejorado -->
+    <div class="relative z-10 w-full flex items-center justify-center">
+      <div class="relative w-24 h-24">
+        <!-- Círculo de fondo -->
+        <svg class="absolute inset-0 w-full h-full transform -rotate-90">
+          <circle cx="48" cy="48" r="44" fill="none" stroke="#fed7aa" stroke-width="8" />
+          <circle cx="48" cy="48" r="44" fill="none" stroke="url(#gradient)" stroke-width="8" stroke-dasharray="276"
+            stroke-dashoffset="0" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-4xl font-black bg-gradient-to-br from-orange-600 to-pink-600 bg-clip-text text-transparent"
+            id="timer">10</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="relative z-10 flex-grow flex flex-col justify-center space-y-4">
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border-2 border-white/50">
+        <span
+          class="inline-block px-3 py-1 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-xs font-bold rounded-full mb-2">Pregunta
+          #10</span>
+        <h2 class="text-xl font-extrabold text-gray-800 leading-tight">Which actor voiced Buzz Lightyear?</h2>
+      </div>
+
+      <div class="grid gap-2.5">
+        <button
+          class="group p-3.5 rounded-xl bg-gradient-to-r from-white/90 to-orange-50/90 hover:from-orange-100 hover:to-orange-200 border-2 border-orange-200 hover:border-orange-400 transition-all text-left shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-95">
+          <div class="flex items-center gap-3">
+            <span
+              class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-orange-400 to-orange-500 text-white font-bold rounded-lg shadow-sm group-hover:shadow-md transition-shadow">A</span>
+            <span class="font-semibold text-gray-800">Tim Allen</span>
+          </div>
+        </button>
+        <button
+          class="group p-3.5 rounded-xl bg-gradient-to-r from-white/90 to-pink-50/90 hover:from-pink-100 hover:to-pink-200 border-2 border-pink-200 hover:border-pink-400 transition-all text-left shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-95">
+          <div class="flex items-center gap-3">
+            <span
+              class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-pink-400 to-pink-500 text-white font-bold rounded-lg shadow-sm group-hover:shadow-md transition-shadow">B</span>
+            <span class="font-semibold text-gray-800">Tom Hanks</span>
+          </div>
+        </button>
+        <button
+          class="group p-3.5 rounded-xl bg-gradient-to-r from-white/90 to-purple-50/90 hover:from-purple-100 hover:to-purple-200 border-2 border-purple-200 hover:border-purple-400 transition-all text-left shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-95">
+          <div class="flex items-center gap-3">
+            <span
+              class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-purple-400 to-purple-500 text-white font-bold rounded-lg shadow-sm group-hover:shadow-md transition-shadow">C</span>
+            <span class="font-semibold text-gray-800">Chris Evans</span>
+          </div>
+        </button>
+        <button
+          class="group p-3.5 rounded-xl bg-gradient-to-r from-white/90 to-yellow-50/90 hover:from-yellow-100 hover:to-yellow-200 border-2 border-yellow-200 hover:border-yellow-400 transition-all text-left shadow-md hover:shadow-lg transform hover:scale-[1.02] active:scale-95">
+          <div class="flex items-center gap-3">
+            <span
+              class="w-8 h-8 flex items-center justify-center bg-gradient-to-br from-yellow-400 to-yellow-500 text-white font-bold rounded-lg shadow-sm group-hover:shadow-md transition-shadow">D</span>
+            <span class="font-semibold text-gray-800">Will Smith</span>
+          </div>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Panel derecho: Lista de preguntas -->
+  <aside
+    class="absolute right-0 top-0 h-full w-80 bg-gradient-to-b from-white/95 to-green-50/95 backdrop-blur-xl border-l border-green-200/50 shadow-2xl overflow-hidden z-20 flex flex-col">
+    <div class="p-6 flex-1 overflow-auto">
+      <div class="flex items-center gap-3 pb-4 border-b border-green-200 mb-4">
+        <div
+          class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center shadow-lg">
+          <i class="fas fa-list text-white text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Mis
+            Preguntas</h3>
+          <p class="text-xs text-gray-600">0 preguntas agregadas</p>
+        </div>
+      </div>
+
+      <div id="questionsList" class="space-y-3">
+        <!-- Mensaje vacío -->
+        <div class="text-center py-12">
+          <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+          <p class="text-gray-500 text-sm">No hay preguntas aún</p>
+          <p class="text-gray-400 text-xs mt-1">Agrega tu primera pregunta</p>
+        </div>
+      </div>
+    </div>
+
+  
+  </aside>
+
+</div>

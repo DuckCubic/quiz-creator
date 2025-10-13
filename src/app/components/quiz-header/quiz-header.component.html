@@ -1,0 +1,29 @@
+<header class="relative z-10 flex items-center justify-between">
+  <div class="flex items-center gap-3">
+    <div class="relative">
+      <img 
+        [src]="avatarUrl" 
+        [alt]="title"
+        class="w-12 h-12 rounded-full border-3 border-white shadow-lg" 
+      />
+      @if (isOnline) {
+        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full">
+        </div>
+      }
+    </div>
+    <div>
+      <h1 class="text-lg font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">
+        {{ title }}
+      </h1>
+      <p class="text-xs text-orange-600/80 font-medium">{{ subtitle }}</p>
+    </div>
+  </div>
+  
+  @if (showCounter) {
+    <div class="flex items-center gap-2">
+      <div class="px-3 py-1 bg-white/90 rounded-full shadow-md">
+        <span class="text-xs font-bold text-orange-600">{{ questionCounter }}</span>
+      </div>
+    </div>
+  }
+</header>
