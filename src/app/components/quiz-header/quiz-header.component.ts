@@ -11,7 +11,7 @@ export class QuizHeaderComponent {
   @Input() avatarUrl: string = './assets/images/youtube/icon.png';
   @Input() isOnline: boolean = true;
   @Input() title: string = 'FrameQuiz';
-  @Input() subtitle: string = 'Cinema Fun';
+  @Input() subtitle: string = 'Preguntas del día';
   @Input() currentQuestion: number = 1;
   @Input() totalQuestions: number = 10;
   @Input() showCounter: boolean = true;

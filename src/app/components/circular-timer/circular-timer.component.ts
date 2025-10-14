@@ -12,7 +12,7 @@ export class CircularTimerComponent implements OnDestroy {
   @Input() timeLimit: number = 10;
   @Output() timeUp = new EventEmitter<void>();
   
-  timeRemaining: number = 10;
+  timeRemaining: number = 15;
   private timerInterval?: number;
   private readonly CIRCLE_CIRCUMFERENCE = 276;
   isRunning = false;

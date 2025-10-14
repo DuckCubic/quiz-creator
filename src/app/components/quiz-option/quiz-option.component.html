@@ -1,6 +1,6 @@
 <div
   [class]="'group p-3.5 rounded-xl transition-all duration-300 text-left transform ' + 
-           (isCorrect === true ? 'bg-gradient-to-r from-green-600 to-emerald-600 border-2 border-green-500 shadow-xl scale-105 ring-4 ring-green-400/50' : '') +
+           (isCorrect === true ? 'bg-gradient-to-r from-sky-600 to-sky-600 border-2 border-sky-500 shadow-xl scale-105 ring-4 ring-sky-400/50' : '') +
            (isCorrect === null && isSelected && isClickable ? 'scale-105 shadow-2xl ring-4 ring-blue-500/50 bg-gradient-to-r from-blue-500 to-indigo-600 border-2 border-blue-400' : '') +
            (isCorrect === null && !isSelected ? 'bg-gradient-to-r ' + colorClasses.bg + ' border-2 ' + colorClasses.border + ' shadow-md ' + (isClickable ? colorClasses.hover + ' hover:shadow-lg hover:scale-[1.02] active:scale-95' : 'cursor-default') : '')"
   >
@@ -9,7 +9,7 @@
     <div class="flex items-center gap-3">
       <span 
         [class]="'w-9 h-9 flex items-center justify-center bg-gradient-to-br font-bold rounded-lg shadow-lg transition-all duration-300 ' + 
-                 (isCorrect === true ? 'from-green-700 to-green-800 text-white scale-110' : '') +
+                 (isCorrect === true ? 'from-sky-700 to-sky-800 text-white scale-110' : '') +
                  (isSelected && isClickable && isCorrect === null ? 'from-white to-blue-50 text-blue-600 scale-110 shadow-xl' : '') +
                  (isCorrect === null && !isSelected ? colorClasses.badge + ' text-white ' + (isClickable ? 'group-hover:shadow-md group-hover:scale-105' : '') : '')">
         {{ letter }}
@@ -26,7 +26,7 @@
     <!-- Checkmark para respuesta correcta (al final) -->
     @if (isCorrect === true) {
       <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-md flex-shrink-0">
-        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
         </svg>
       </div>

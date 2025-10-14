@@ -192,7 +192,7 @@ export default class GeneratorQuizPage implements OnInit, AfterViewInit, OnDestr
       return;
     }
 
-    // Iniciar transición
+    // Iniciar transición de salida
     this.isTransitioning = true;
     this.cdr.detectChanges();
     
@@ -202,22 +202,25 @@ export default class GeneratorQuizPage implements OnInit, AfterViewInit, OnDestr
       this.selectedOption = null;
       this.showingAnswer = false;
       
+      // Cambiar video inmediatamente
+      this.changeVideo();
+      
       this.cdr.detectChanges();
       
-      // Cambiar video DESPUÉS de actualizar el índice
+      // Pequeña pausa para asegurar que el DOM se actualice
       setTimeout(() => {
-        this.changeVideo();
-        
-        // Terminar transición y mostrar nueva pregunta
+        // Terminar transición (fade in)
         this.isTransitioning = false;
         this.cdr.detectChanges();
         
-        // Iniciar timer para la siguiente pregunta
-        if (this.timer) {
-          this.timer.resetTimer();
-          this.timer.startTimer();
-        }
-      }, 100);
+        // Esperar a que termine completamente el fade in antes de iniciar el timer
+        setTimeout(() => {
+          if (this.timer) {
+            this.timer.resetTimer();
+            this.timer.startTimer();
+          }
+        }, 350); // Esperar 350ms después del fade in para que sea visible
+      }, 50);
     }, 300);
   }
 
@@ -261,7 +264,7 @@ export default class GeneratorQuizPage implements OnInit, AfterViewInit, OnDestr
    * Alternar entre fondo blanco y verde
    */
   toggleBackground() {
-    this.backgroundColor = this.backgroundColor === '#ffffff' ? '#10b981' : '#ffffff';
+    this.backgroundColor = this.backgroundColor === '#ffffff' ? '#04F404' : '#ffffff';
   }
 
   /**
