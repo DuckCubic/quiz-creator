@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuizHeaderComponent {
-  @Input() avatarUrl: string = 'https://i.pravatar.cc/102';
+  @Input() avatarUrl: string = './assets/images/youtube/icon.png';
   @Input() isOnline: boolean = true;
   @Input() title: string = 'FrameQuiz';
   @Input() subtitle: string = 'Cinema Fun';

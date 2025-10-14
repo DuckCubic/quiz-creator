@@ -1,13 +1,16 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { QuizOptionComponent } from "../../components/quiz-option/quiz-option.component";
 import { QuizHeaderComponent } from "../../components/quiz-header/quiz-header.component";
 import { CircularTimerComponent } from "../../components/circular-timer/circular-timer.component";
 import { Question } from '../../interfaces/quiz.interface';
+import { QuizService } from '../../services/quiz.service.service';
 
 @Component({
   selector: 'app-generator-quiz-page',
   standalone: true,
   imports: [
+    CommonModule,
     QuizOptionComponent,
     QuizHeaderComponent,
     CircularTimerComponent
@@ -15,50 +18,62 @@ import { Question } from '../../interfaces/quiz.interface';
   templateUrl: './generator-quiz-page.html',
   styleUrl: './generator-quiz-page.css'
 })
-export default class GeneratorQuizPage implements AfterViewInit {
+export default class GeneratorQuizPage implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @ViewChild(CircularTimerComponent) timer!: CircularTimerComponent;
 
-  questions: Question[] = [
-    {
-      id: 1,
-      questionText: "Which actor voiced Buzz Lightyear?",
-      options: {
-        A: "Tim Allen",
-        B: "Tom Hanks",
-        C: "Chris Evans",
-        D: "Will Smith"
-      },
-      correctAnswer: "A",
-      timeLimit: 10,
-      videoUrl: "assets/videos/kick.mp4"
-    },
-    {
-      id: 2,
-      questionText: "In which year was the first Star Wars movie released?",
-      options: {
-        A: "1975",
-        B: "1977",
-        C: "1980",
-        D: "1983"
-      },
-      correctAnswer: "B",
-      timeLimit: 10,
-      videoUrl: "assets/videos/overlord.mp4"
-    },
-  ];
-
+  questions: Question[] = [];
   currentQuestionIndex = 0;
   selectedOption: string | null = null;
   quizStarted = false;
   showingAnswer = false;
+  loading = true;
+  error: string | null = null;
+  backgroundColor = '#ffffff'; // Fondo inicial blanco
+  audioMode: 'music' | 'video' = 'video'; // Modo de audio inicial
+  isTransitioning = false; // Para controlar la transición entre preguntas
+  
   private answerTimeout: any = null;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private quizService: QuizService
+  ) {}
+
+  ngOnInit() {
+    this.loadQuestionsFromSupabase();
+  }
 
   ngAfterViewInit() {
-    this.loadInitialVideo();
+    // El video se cargará después de obtener las preguntas
+  }
+
+  /**
+   * Cargar preguntas desde Supabase
+   */
+  loadQuestionsFromSupabase() {
+    this.loading = true;
+    this.error = null;
+    
+    this.quizService.getQuestions().subscribe({
+      next: (questions) => {
+        console.log('Preguntas cargadas desde Supabase:', questions);
+        this.questions = questions;
+        this.loading = false;
+        
+        if (this.questions.length > 0) {
+          this.cdr.detectChanges();
+          setTimeout(() => this.loadInitialVideo(), 100);
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar preguntas:', err);
+        this.error = 'Error al cargar las preguntas. Por favor, intenta nuevamente.';
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   get currentQuestion(): Question {
@@ -81,7 +96,7 @@ export default class GeneratorQuizPage implements AfterViewInit {
 
   // Cargar video inicial
   loadInitialVideo() {
-    if (this.videoPlayer?.nativeElement) {
+    if (this.videoPlayer?.nativeElement && this.questions.length > 0) {
       const video = this.videoPlayer.nativeElement;
       const videoUrl = this.currentQuestion.videoUrl;
       
@@ -90,8 +105,15 @@ export default class GeneratorQuizPage implements AfterViewInit {
         return;
       }
       
-      video.muted = true;
-      video.volume = 0;
+      // Configurar audio según el modo seleccionado
+      if (this.audioMode === 'music') {
+        video.muted = true;
+        video.volume = 0;
+      } else {
+        video.muted = false;
+        video.volume = 1;
+      }
+      
       video.src = videoUrl;
       video.load();
       video.play().catch(e => console.log('Error playing initial video:', e));
@@ -100,6 +122,11 @@ export default class GeneratorQuizPage implements AfterViewInit {
 
   // Iniciar el quiz
   startQuiz() {
+    if (this.questions.length === 0) {
+      console.warn('No hay preguntas disponibles');
+      return;
+    }
+
     this.quizStarted = true;
     this.currentQuestionIndex = 0;
     this.selectedOption = null;
@@ -150,7 +177,7 @@ export default class GeneratorQuizPage implements AfterViewInit {
     }, 5000);
   }
 
-  // Ir a la siguiente pregunta automáticamente
+  // Ir a la siguiente pregunta automáticamente con transición
   goToNextQuestion() {
     if (this.answerTimeout) {
       clearTimeout(this.answerTimeout);
@@ -165,22 +192,33 @@ export default class GeneratorQuizPage implements AfterViewInit {
       return;
     }
 
-    this.currentQuestionIndex++;
-    this.selectedOption = null;
-    this.showingAnswer = false;
-    
+    // Iniciar transición
+    this.isTransitioning = true;
     this.cdr.detectChanges();
     
-    // Cambiar video DESPUÉS de actualizar el índice
+    // Esperar que termine la transición de salida (300ms)
     setTimeout(() => {
-      this.changeVideo();
+      this.currentQuestionIndex++;
+      this.selectedOption = null;
+      this.showingAnswer = false;
       
-      // Iniciar timer para la siguiente pregunta
-      if (this.timer) {
-        this.timer.resetTimer();
-        this.timer.startTimer();
-      }
-    }, 100);
+      this.cdr.detectChanges();
+      
+      // Cambiar video DESPUÉS de actualizar el índice
+      setTimeout(() => {
+        this.changeVideo();
+        
+        // Terminar transición y mostrar nueva pregunta
+        this.isTransitioning = false;
+        this.cdr.detectChanges();
+        
+        // Iniciar timer para la siguiente pregunta
+        if (this.timer) {
+          this.timer.resetTimer();
+          this.timer.startTimer();
+        }
+      }, 100);
+    }, 300);
   }
 
   changeVideo() {
@@ -201,9 +239,14 @@ export default class GeneratorQuizPage implements AfterViewInit {
       // Cambiar la fuente del video
       video.src = newVideoUrl;
       
-      // Mantener el video muted
-      video.muted = true;
-      video.volume = 0;
+      // Configurar audio según el modo seleccionado
+      if (this.audioMode === 'music') {
+        video.muted = true;
+        video.volume = 0;
+      } else {
+        video.muted = false;
+        video.volume = 1;
+      }
       
       // Cargar y reproducir el nuevo video
       video.load();
@@ -212,6 +255,39 @@ export default class GeneratorQuizPage implements AfterViewInit {
         .then(() => console.log('Video cargado exitosamente:', newVideoUrl))
         .catch(e => console.log('Error playing video:', e));
     }
+  }
+
+  /**
+   * Alternar entre fondo blanco y verde
+   */
+  toggleBackground() {
+    this.backgroundColor = this.backgroundColor === '#ffffff' ? '#10b981' : '#ffffff';
+  }
+
+  /**
+   * Alternar entre modo música y audio del video
+   */
+  toggleAudioMode() {
+    this.audioMode = this.audioMode === 'music' ? 'video' : 'music';
+    
+    // Si ya hay un video cargado, actualizar su configuración de audio
+    if (this.videoPlayer?.nativeElement) {
+      const video = this.videoPlayer.nativeElement;
+      if (this.audioMode === 'music') {
+        video.muted = true;
+        video.volume = 0;
+      } else {
+        video.muted = false;
+        video.volume = 1;
+      }
+    }
+  }
+
+  /**
+   * Reintentar carga de preguntas
+   */
+  retryLoadQuestions() {
+    this.loadQuestionsFromSupabase();
   }
 
   ngOnDestroy() {

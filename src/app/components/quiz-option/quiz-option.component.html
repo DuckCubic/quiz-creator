@@ -15,8 +15,8 @@
         {{ letter }}
       </span>
       <span 
-        class="font-semibold transition-all duration-300" 
-        [class.text-white]="isCorrect === true || (isSelected && isClickable)"
+        class="font-semibold transition-all duration-300 drop-shadow-lg" 
+        [class.text-white]="isCorrect === true || (isSelected && isClickable) || isCorrect === null"
         [class.text-lg]="isSelected && isClickable || isCorrect === true"
         [class.font-bold]="isSelected && isClickable || isCorrect === true">
         {{ text }}

@@ -15,31 +15,31 @@ export class QuizOptionComponent {
   @Input() isCorrect: boolean | null = null; 
   @Input() isClickable: boolean = false; // Nueva propiedad para controlar si es clickeable
 
-  // Mapeo de colores según la letra
+  // Mapeo de colores según la letra - Ahora con fondos transparentes
   get colorClasses() {
     const colors = {
       'A': {
-        bg: 'from-white/90 to-orange-50/90',
-        hover: 'hover:from-orange-100 hover:to-orange-200',
-        border: 'border-orange-200 hover:border-orange-400',
+        bg: 'from-white/20 to-orange-50/20',
+        hover: 'hover:from-orange-100/30 hover:to-orange-200/30',
+        border: 'border-orange-200/50 hover:border-orange-400/70',
         badge: 'from-orange-400 to-orange-500'
       },
       'B': {
-        bg: 'from-white/90 to-pink-50/90',
-        hover: 'hover:from-pink-100 hover:to-pink-200',
-        border: 'border-pink-200 hover:border-pink-400',
+        bg: 'from-white/20 to-pink-50/20',
+        hover: 'hover:from-pink-100/30 hover:to-pink-200/30',
+        border: 'border-pink-200/50 hover:border-pink-400/70',
         badge: 'from-pink-400 to-pink-500'
       },
       'C': {
-        bg: 'from-white/90 to-purple-50/90',
-        hover: 'hover:from-purple-100 hover:to-purple-200',
-        border: 'border-purple-200 hover:border-purple-400',
+        bg: 'from-white/20 to-purple-50/20',
+        hover: 'hover:from-purple-100/30 hover:to-purple-200/30',
+        border: 'border-purple-200/50 hover:border-purple-400/70',
         badge: 'from-purple-400 to-purple-500'
       },
       'D': {
-        bg: 'from-white/90 to-yellow-50/90',
-        hover: 'hover:from-yellow-100 hover:to-yellow-200',
-        border: 'border-yellow-200 hover:border-yellow-400',
+        bg: 'from-white/20 to-yellow-50/20',
+        hover: 'hover:from-yellow-100/30 hover:to-yellow-200/30',
+        border: 'border-yellow-200/50 hover:border-yellow-400/70',
         badge: 'from-yellow-400 to-yellow-500'
       }
     };
